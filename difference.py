@@ -18,12 +18,12 @@ u[0, :] = 0
 u[-1, :] = 0
 
 for i in range(1, Nx - 1):
-    u[i, 0] = np.sin(math.pi) * i
+    u[i, 0] = np.sin(math.pi * i)
     # print(u[i, 0])
 
 
-for j in range(Nt - 2):
-    for i in range(1, Nx - 1):
+for j in range(Nt - 1):
+    for i in range(Nx - 2):
         u[i, j + 1] = st * u[i + 1, j] + (1 - st) * u[i, j]
 
 x = list(range(Nx))
@@ -38,9 +38,12 @@ def functz(u):
 
 
 Z = functz(u)
+
+
+Z = functz(u)
 fig = plt.figure()
 ax = Axes3D(fig)
-ax.plot_surface(X, Y, Z, color='r')
+ax.plot_wireframe(X, Y, Z, color='r')
 ax.set_xlabel('x')
 ax.set_ylabel('t')
 ax.set_zlabel('U')

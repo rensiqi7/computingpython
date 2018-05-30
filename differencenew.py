@@ -18,7 +18,7 @@ u[0, :] = 0
 u[-1, :] = 0
 
 for i in range(1, Nx - 1):
-    u[i, 0] = np.sin(math.pi) * i
+    u[i, 0] = np.sin(math.pi * i)
 
 
 for j in range(Nt - 1):
