@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+# from matplotlib.animation import ArtistAnimation
 
 
 lenx = 1
@@ -17,9 +19,21 @@ u = np.zeros([Nx, Nt])
 u[0, :] = 0
 u[-1, :] = 0
 
-for i in range(1, Nx - 1):
-    u[i, 0] = np.sin(math.pi * i)
-    # print(u[i, 0])
+
+def drange(start, stop, step):
+    r = start
+    while r < stop:
+        yield r
+        r += step
+
+
+ubot = []
+for i in drange(0.00, 1.00, deltax):
+    ubot.append(np.sin(math.pi * i))
+
+for k in range(Nx):
+    u[k, 0] = ubot[k]
+    print(u[k, 0])
 
 
 for j in range(Nt - 1):
@@ -28,7 +42,6 @@ for j in range(Nt - 1):
 
 x = list(range(Nx))
 y = list(range(Nt))
-
 X, Y = np.meshgrid(x, y)
 
 
@@ -38,12 +51,9 @@ def functz(u):
 
 
 Z = functz(u)
-
-
-Z = functz(u)
 fig = plt.figure()
 ax = Axes3D(fig)
-ax.plot_wireframe(X, Y, Z, color='r')
+ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, linewidth=0, antialiased=False)
 ax.set_xlabel('x')
 ax.set_ylabel('t')
 ax.set_zlabel('U')

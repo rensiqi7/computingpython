@@ -10,21 +10,34 @@ deltat = 1 / 100
 deltax = 1 / 100
 Nt = 100
 Nx = int(lenx / deltax)
-st = deltat / 2 * deltax
+st = deltat / deltax
 
 u = np.zeros([Nx, Nt])
 
 u[0, :] = 0
 u[-1, :] = 0
 
-for i in range(1, Nx - 1):
-    u[i, 0] = np.sin(math.pi * i)
+
+def drange(start, stop, step):
+    r = start
+    while r < stop:
+        yield r
+        r += step
+
+
+ubot = []
+for i in drange(0.00, 1.00, deltax):
+    ubot.append(np.sin(math.pi * i))
+
+for k in range(Nx):
+    u[k, 0] = ubot[k]
+    print(u[k, 0])
 
 
 for j in range(Nt - 1):
-    for i in range(1, Nx - 1):
+    for i in range(Nx - 2):
         u[i, j + 1] = st * (u[i + 1, j] - u[i - 1, j]) + u[i, j]
-        print(u[i, j])
+
 
 x = list(range(Nx))
 y = list(range(Nt))
