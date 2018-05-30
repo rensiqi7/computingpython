@@ -10,7 +10,7 @@ deltat = 1 / 100
 deltax = 1 / 100
 Nt = 100
 Nx = int(lenx / deltax)
-st = deltat / deltax
+st = deltat / 2 * deltax
 
 u = np.zeros([Nx, Nt])
 
@@ -19,12 +19,12 @@ u[-1, :] = 0
 
 for i in range(1, Nx - 1):
     u[i, 0] = np.sin(math.pi) * i
-    # print(u[i, 0])
 
 
-for j in range(Nt - 2):
+for j in range(Nt - 1):
     for i in range(1, Nx - 1):
-        u[i, j + 1] = st * u[i + 1, j] + (1 - st) * u[i, j]
+        u[i, j + 1] = st * (u[i + 1, j] - u[i - 1, j]) + u[i, j]
+        print(u[i, j])
 
 x = list(range(Nx))
 y = list(range(Nt))
